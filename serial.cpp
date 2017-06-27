@@ -33,7 +33,7 @@ int main() {
 
   if(!SetCommTimeouts(serial, &timeouts))
   {
-    printf("Ocorreu um erro\n", );
+    printf("Ocorreu um erro\n");
   }
 
   fSuccess = GetCommState(serial, &dcb);
@@ -58,6 +58,33 @@ int main() {
   }
 
   printf ("Porta serial %s configurada com sucesso.\n", pcCommPort);
-  return (0);
 
+  puts("_____________________________________________\n");
+  int op = 0;
+
+  puts("MENU:");
+  puts("1 - ATIVAR PORTA");
+  puts("2 - SAIR");
+  scanf("%d", &op);
+  printf("%d\n", op);
+
+  if (op == 1) {
+    EnviaComando('a');
+    r = RecebeResposta();
+  }else{
+    return(0);
+  }
+}
+
+void EnviaComando(char comando){
+  TotalBytesaEnviar = 1;
+  TxBuff[0] = comando;
+  WriteFile(serial, &TxBuff, TotalBytesaEnviar, &BytesEnviados, NULL );
+}
+
+char RecebeResposta(void){
+    TotalBytesaReceber = 1;
+    RxBuff[0] = 0;
+    ReadFile(hSerial, &RxBuff, TotalBytesaReceber, &BytesRecebidos, NULL);
+    return RxBuff[0];
 }
