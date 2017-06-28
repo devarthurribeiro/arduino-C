@@ -33,14 +33,9 @@ int main() {
   DCB dcb={0};
   HANDLE serial;
   BOOL fSuccess;
-  char *pcCommPort = "COM3";
+  char *pcCommPort = "\\\\.\\COM3";
 
   COMMTIMEOUTS timeouts={0};
-  timeouts.ReadIntervalTimeout=50;
-  timeouts.ReadTotalTimeoutConstant=50;
-  timeouts.ReadTotalTimeoutMultiplier=10;
-  timeouts.WriteTotalTimeoutConstant=50;
-  timeouts.WriteTotalTimeoutMultiplier=10;
 
 
   serial = CreateFile( pcCommPort,
@@ -58,11 +53,6 @@ int main() {
     return (1);
   }
 
-  if(!SetCommTimeouts(serial, &timeouts))
-  {
-    printf("Ocorreu um erro\n");
-  }
-
   fSuccess = GetCommState(serial, &dcb);
 
   if (!fSuccess)
@@ -73,9 +63,9 @@ int main() {
 
 
   dcb.BaudRate = 9600;     // Definir a taxa de transmissão
-  dcb.ByteSize = 7;             // Tamanho de dados, xmit e rcv
-  dcb.Parity = EVENPARITY;        // Sem paridade bit
-  dcb.StopBits = ONESTOPBIT;    // Um bit de parada
+  dcb.ByteSize = 8;             // Tamanho de dados, xmit e rcv
+  dcb.Parity = ONESTOPBIT;        // Sem paridade bit
+  dcb.StopBits = NOPARITY;    // Um bit de parada
   fSuccess = SetCommState(serial, &dcb);
 
   if (!fSuccess)
