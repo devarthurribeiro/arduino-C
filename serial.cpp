@@ -2,6 +2,16 @@
 #include <windows.h>
 #include <stdio.h>
 
+HANDLE hSerial;
+char TxBuff [12];
+char RxBuff [12];
+
+HANDLE serial;
+unsigned int TotalBytesaEnviar;
+unsigned int TotalBytesaReceber;
+unsigned long BytesEnviados;
+unsigned long BytesRecebidos = 0;
+
 void EnviaComando(char comando){
   TotalBytesaEnviar = 1;
   TxBuff[0] = comando;
