@@ -2,6 +2,20 @@
 #include <windows.h>
 #include <stdio.h>
 
+void EnviaComando(char comando){
+  TotalBytesaEnviar = 1;
+  TxBuff[0] = comando;
+  WriteFile(serial, &TxBuff, TotalBytesaEnviar, &BytesEnviados, NULL );
+}
+
+char RecebeResposta(void){
+    TotalBytesaReceber = 1;
+    RxBuff[0] = 0;
+    ReadFile(hSerial, &RxBuff, TotalBytesaReceber, &BytesRecebidos, NULL);
+    return RxBuff[0];
+    return 'a';
+}
+
 int main() {
   DCB dcb={0};
   HANDLE serial;
@@ -66,25 +80,11 @@ int main() {
   puts("1 - ATIVAR PORTA");
   puts("2 - SAIR");
   scanf("%d", &op);
-  printf("%d\n", op);
-
   if (op == 1) {
     EnviaComando('a');
-    r = RecebeResposta();
+    char r = RecebeResposta();
+    printf("resposta: %s\n", &r);
   }else{
     return(0);
   }
-}
-
-void EnviaComando(char comando){
-  TotalBytesaEnviar = 1;
-  TxBuff[0] = comando;
-  WriteFile(serial, &TxBuff, TotalBytesaEnviar, &BytesEnviados, NULL );
-}
-
-char RecebeResposta(void){
-    TotalBytesaReceber = 1;
-    RxBuff[0] = 0;
-    ReadFile(hSerial, &RxBuff, TotalBytesaReceber, &BytesRecebidos, NULL);
-    return RxBuff[0];
 }
