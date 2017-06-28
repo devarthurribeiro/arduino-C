@@ -12,6 +12,7 @@ void loop() {
   if(Serial.available()){
     dado = Serial.read();
     if (dado == 'a'){
+      Serial.println("Comando recebido");
       digitalWrite(trava, HIGH);
       delay(2000);
       aux = digitalRead(sensor);
