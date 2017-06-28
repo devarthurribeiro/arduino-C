@@ -11,11 +11,15 @@ unsigned int TotalBytesaEnviar;
 unsigned int TotalBytesaReceber;
 unsigned long BytesEnviados;
 unsigned long BytesRecebidos = 0;
+bool bErrorFlag = false;
 
 void EnviaComando(char comando){
   TotalBytesaEnviar = 1;
   TxBuff[0] = comando;
-  WriteFile(serial, &TxBuff, TotalBytesaEnviar, &BytesEnviados, NULL );
+  bErrorFlag =  WriteFile(serial, &TxBuff, TotalBytesaEnviar, &BytesEnviados, NULL );
+  if (bErrorFlag == false){
+    printf("Terminal failure: Unable to write to file.\n");
+  }
 }
 
 char RecebeResposta(void){
