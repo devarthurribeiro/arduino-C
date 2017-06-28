@@ -13,7 +13,6 @@ char RecebeResposta(void){
     RxBuff[0] = 0;
     ReadFile(hSerial, &RxBuff, TotalBytesaReceber, &BytesRecebidos, NULL);
     return RxBuff[0];
-    return 'a';
 }
 
 int main() {
